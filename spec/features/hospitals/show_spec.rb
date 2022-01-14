@@ -29,7 +29,7 @@ RSpec.describe 'Hospital Show Page' do
     it 'shows unique list of universities that this hospitals doctors attended' do
       visit "hospitals/#{@hospital_1.id}"
 
-      expect(page).to have_content("Universitys that these doctors attended: Yale, WWU, CWU")
+      expect(page).to have_content("Universitys that these doctors attended: CWU, WWU, Yale")
     end
   end
 end

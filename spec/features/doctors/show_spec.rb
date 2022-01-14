@@ -43,5 +43,24 @@ RSpec.describe 'Doctor Show Page' do
 
       expect(page).to_not have_content(@patient_1.name)
     end
+
+    it 'REFACTOR: Tests accurate SQL in doctor_patients destroy action by adding other doctors' do #test could have failed by grabbing another doctors same patient.
+      doctor_2 = @hospital_1.doctors.create!(name: "Other Doctor", specialty: "Lung Surgeon", university: "UCLA")
+      @patient_1.doctor_patients.create!(doctor_id: doctor_2.id)
+
+      doctor_3 = @hospital_1.doctors.create!(name: "Different Doctor", specialty: "Heart Surgeon", university: "OSU")
+      @patient_1.doctor_patients.create!(doctor_id: doctor_3.id)
+
+      visit "/doctors/#{@doctor_1.id}"
+
+      expect(page).to have_content(@patient_1.name)
+
+      click_button "Remove #{@patient_1.name} From Caseload"
+      expect(current_path).to eq("/doctors/#{@doctor_1.id}")
+
+      expect(page).to_not have_content(@patient_1.name)
+      expect(page).to have_content(@patient_2.name)
+      expect(page).to have_content(@patient_3.name)
+    end
   end
 end

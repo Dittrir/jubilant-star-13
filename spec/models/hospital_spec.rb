@@ -28,7 +28,7 @@ RSpec.describe Hospital do
     end
 
     it '#doctor_universities' do
-      expect(@hospital_1.doctor_universities).to eq("Yale, WWU, CWU")
+      expect(@hospital_1.doctor_universities).to eq("CWU, WWU, Yale")
     end
   end
 end
